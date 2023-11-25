@@ -3,27 +3,25 @@
 AutoPilot ParkAssist is an advanced self-parking system designed to make parking in tight spaces effortless. This project utilizes a combination of Raspberry Pi, STM32, camera, ultrasonic sensors, and a compass to provide real-time feedback during parking maneuvers. The entire system is open-source, fostering innovation and collaboration in the development of autonomous parking solutions.
 
 ## Version
-- **Version 0** : Manual Phase Park Assist using Arduino nano test and Bluetooth module HC-05 and L298n
+- **Version 0**: Manual Phase Park Assist using Arduino nano test and Bluetooth module HC-05 and L298n
 
-## Getting Started
+## Hardware Setup
 
-To get started with AutoPilot ParkAssist, follow these steps:
+To get started with AutoPilot ParkAssist, follow these steps for setting up the required hardware components:
 
-1. **Hardware Setup:** Ensure you have the required hardware components, including Raspberry Pi, STM32, camera, ultrasonic sensors, and a compass. Connect them according to the provided guidelines.
+1. **Raspberry Pi:** Ensure you have a Raspberry Pi board.
 
-2. **Software Installation:** Install the necessary software components on the Raspberry Pi and STM32. Refer to the documentation for detailed instructions.
+2. **STM32:** Obtain an STM32 microcontroller for interfacing with sensors and controlling the parking system.
 
-3. **Upload Arduino Code:** Use the provided Arduino code (`ManualPhaseParkAssistV0.ino`) to program the STM32 for the automated parking system.
+3. **Camera:** Connect a compatible camera for visual input.
 
-4. **Run the System:** Once everything is set up, run the AutoPilot ParkAssist system and test it in a controlled environment.
+4. **Ultrasonic Sensors:** Include ultrasonic sensors for proximity detection during parking maneuvers.
+
+5. **Compass:** Integrate a compass to provide directional information.
 
 ## Contributing
 
 We welcome contributions from the community to enhance and improve AutoPilot ParkAssist. If you have ideas, bug fixes, or new features to propose, please follow the guidelines in the [Contribution Guide](CONTRIBUTING.md).
-
-## Issues and Support
-
-If you encounter any issues or have questions about AutoPilot ParkAssist, please check the [issue tracker](https://github.com/AhmedSamymoh/AutoPilot-ParkAssist/issues) for existing problems or open a new issue. For general support and discussions, you can also visit our [community forum](https://example.com/community).
 
 ## License
 
