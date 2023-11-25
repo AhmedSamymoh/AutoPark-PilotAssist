@@ -11,7 +11,7 @@ To get started with AutoPilot ParkAssist, follow these steps for setting up the 
 
 1. **Raspberry Pi:** Ensure you have a Raspberry Pi board.
 
-2. **STM32:** Obtain an STM32 microcontroller for interfacing with sensors and controlling the parking system.
+2. **STM32F103:** Obtain an STM32 microcontroller for interfacing with sensors and controlling the parking system.
 
 3. **Camera:** Connect a compatible camera for visual input.
 
@@ -21,13 +21,10 @@ To get started with AutoPilot ParkAssist, follow these steps for setting up the 
 
 ## Contributing
 
-We welcome contributions from the community to enhance and improve AutoPilot ParkAssist. If you have ideas, bug fixes, or new features to propose, please follow the guidelines in the [Contribution Guide](CONTRIBUTING.md).
+We welcome contributions to enhance and improve the Project. If you have ideas, bug fixes, or new features to propose, Please feel free to open issues or pull requests to help improve.
 
 ## License
 
-AutoPilot ParkAssist is released under the [MIT License](LICENSE). Feel free to use, modify, and distribute the code for your projects.
+AutoPilot ParkAssist is released under the [MIT License](LICENSE)
 
 ---
-
-**Note:** The provided Arduino code (`ManualPhaseParkAssistV0.ino`) is part of Version Zero of the project. Check for updates and newer versions on the [project repository](https://github.com/AhmedSamymoh/AutoPilot-ParkAssist).
-
