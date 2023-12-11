@@ -5,6 +5,12 @@ AutoPilot ParkAssist is an advanced self-parking system designed to make parking
 # Versions
 - [Version 0](Version_0/) [ManualPhaseParkAssistV0](Version_0/ManualPhaseParkAssistV0.ino/):
    Manual Phase Park Assist using Arduino nano test and Bluetooth module HC-05 and L298n
+- [Version 1](Version_1/): Sensors Calibration and Test
+- [Version 2](Version_2/): - [Catkin_ws](Version_2/Raspberry/) ROS Workspace and Data Transmission
+                           - [ESP32](Version_2/Version2_Esp32/): ESP32 Recieve data from sensors and send it via usb to raspberry.
+
+
+
 ---
 ## Hardware Setup
 
