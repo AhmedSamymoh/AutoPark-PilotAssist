@@ -1,14 +1,19 @@
 
 /**
-* @file: PhaseParkAssistV2_ESP32.ino
-* @date: December 1, 2023
+* @file: PhaseParkAssistV2.2_ESP32.ino
+* @date: December 19, 2023
 * @author: Ahmed Samy Elnozahy
 *
-* @brief: Code for Version-One to our project:
+* @brief: Code for Version-Two to our project:
 *         AutoPilot-ParkAssist 
 *         using HC-05 Bluetooth Module and L298d MotorDriver
 *         and Encoder and couple of ultrasonics
-*         
+*
+* @version: 2.2
+*
+* @updates: Now the Esp32 only sends the readings of the sensors
+*           and the raspberry takes the reading via serial communication
+*           and raspberry control motors depending on those values        
 **/
 
 #include "Wire.h"
@@ -17,46 +22,36 @@
 
 /*Ultrasonic*/
 
- /* behind */
+ /* behind 1 */
 #define echoN1  34 
 #define trigN1  32
+ /* behind 2*/
+#define echoN4  26
+#define trigN4  14
 
+/* backward */
 #define echoN3  17
 #define trigN3  16 
 
-#define echoN2  19 // forward
+/* forward */
+#define echoN2  19 
 #define trigN2  18
 
 #define Buzzer  15
 
-
-
-/* motors */
-
-int speed1 = 250;
-int speed2 = 250;
-
-#define IN1  26
-#define IN2  27
-#define IN3  14
-#define IN4  12
-
-/* Motor enable pins */
-#define enablem1Pin3  12
-#define enablem2Pin3  33
-
 unsigned long lastTriggerTimeN1 = 0;
 unsigned long lastTriggerTimeN2 = 0;
 unsigned long lastTriggerTimeN3 = 0;
-
+unsigned long lastTriggerTimeN4 = 0;
 
 
 
 long timer = 0;
-int distBehind;
+int distBehind1;
+int distBehind2;
 int distForw;
 int distBack;
-int timB, tim2, timF;
+int timB, tim1 ,tim2, timF;
 
 volatile long encoderCount = 0;
 volatile float distance = 0.0;
@@ -80,10 +75,8 @@ void setup()
   /*For Debugging - Serial to Computer to Print*/
   Serial.begin(9600);
   Wire.begin();
-  pinMode(IN1, OUTPUT);
-  pinMode(IN2, OUTPUT);
-  pinMode(IN3, OUTPUT);
-  pinMode(IN4, OUTPUT);
+
+
   pinMode(Buzzer, OUTPUT);
 
   pinMode(echoN1, INPUT);
@@ -94,6 +87,10 @@ void setup()
 
   pinMode(echoN3, INPUT);
   pinMode(trigN3, OUTPUT);
+
+  pinMode(echoN4, INPUT);
+  pinMode(trigN4, OUTPUT);
+
 
   pinMode(encoderPin, INPUT_PULLUP);
   attachInterrupt(digitalPinToInterrupt(encoderPin), handleEncoder, RISING);
@@ -108,165 +105,15 @@ void loop()
   /*For making Raspberry to adjust the speed of motors*/
   if (Serial.available() > 0)
   {
-    // Read the first speed value
-    speed1 = Serial.parseInt();
-
-    // Check if there is another speed value
-    if (Serial.peek() == ' ')
-    {
-      // Read the separator
-      Serial.read();
-      
-      // Read the second speed value
-      speed2 = Serial.parseInt();
-      
-      // Set motor speeds
-      analogWrite(enablem1Pin3, speed1);
-      analogWrite(enablem2Pin3, speed2);
-
-      Serial.print("speed1: ");
-      Serial.println(speed1);
-      Serial.print("speed2: ");
-      Serial.println(speed2);
-
-
       serialA = Serial.read();
-    }
-
-
-   Motors_Move(serialA);
   }
-
-  analogWrite(enablem1Pin3, speed1);
-  analogWrite(enablem2Pin3, speed2);
-  
   ultrasonic();
   IMU();
   printDistance();
 }
 
 
-void Motors_Move(int serialMsg)
-{
-  /* Motor control based on received Bluetooth commands */
-  switch (serialMsg)
-  {
-  /* forward */
-  case 'F':
-    digitalWrite(IN1, HIGH);
-    digitalWrite(IN2, LOW);
 
-    digitalWrite(IN3, LOW);
-    digitalWrite(IN4, HIGH);
-
-    /* Set motor speed to 80 to accurate parking */
-    analogWrite(enablem1Pin3, speed1);
-    analogWrite(enablem2Pin3, speed2);
-    break;
-
-  /* left */
-  case 'L':
-    digitalWrite(IN1, HIGH);
-    digitalWrite(IN2, LOW);
-
-    digitalWrite(IN3, HIGH);
-    digitalWrite(IN4, LOW);
-
-    /* Set motor speed to 80 to accurate parking */
-    analogWrite(enablem1Pin3, speed1);
-    analogWrite(enablem2Pin3, speed2);
-    break;
-
-  /* right */
-  case 'R':
-    digitalWrite(IN1, LOW);
-    digitalWrite(IN2, HIGH);
-
-    digitalWrite(IN3, LOW);
-    digitalWrite(IN4, HIGH);
-
-    /* Set motor speed to 80 to accurate parking */
-    analogWrite(enablem1Pin3, speed1);
-    analogWrite(enablem2Pin3, speed2);
-    break;
-
-  /* forward left */
-  case 'G':
-    digitalWrite(IN1, HIGH);
-    digitalWrite(IN2, LOW);
-
-    digitalWrite(IN3, LOW);
-    digitalWrite(IN4, LOW);
-
-    /* Set motor speed to 80 to accurate parking */
-    analogWrite(enablem1Pin3, speed1);
-    analogWrite(enablem2Pin3, speed2);
-    break;
-
-  /* forward right */
-  case 'I':
-    digitalWrite(IN1, LOW);
-    digitalWrite(IN2, LOW);
-
-    digitalWrite(IN3, LOW);
-    digitalWrite(IN4, HIGH);
-
-    /* Set motor speed to 80 to accurate parking */
-    analogWrite(enablem1Pin3, speed1);
-    analogWrite(enablem2Pin3, speed2);
-    break;
-
-  /*  backward left */
-  case 'H':
-    digitalWrite(IN1, HIGH);
-    digitalWrite(IN2, LOW);
-
-    digitalWrite(IN3, HIGH);
-    digitalWrite(IN4, LOW);
-
-    /* Set motor speed to 80 to accurate parking */
-    analogWrite(enablem1Pin3, speed1);
-    analogWrite(enablem2Pin3, speed2);
-    break;
-
-  /*  backward right */
-  case 'J':
-    digitalWrite(IN1, LOW);
-    digitalWrite(IN2, HIGH);
-
-    digitalWrite(IN3, LOW);
-    digitalWrite(IN4, HIGH);
-
-    /* Set motor speed to 80 to accurate parking */
-    analogWrite(enablem1Pin3, speed1);
-    analogWrite(enablem2Pin3, speed2);
-    break;
-
-  /*  backward */
-  case 'B':
-    digitalWrite(IN1, LOW);
-    digitalWrite(IN2, HIGH);
-
-    digitalWrite(IN3, HIGH);
-    digitalWrite(IN4, LOW);
-
-    /* Set motor speed to 80 to accurate parking */
-    analogWrite(enablem1Pin3, speed1);
-    analogWrite(enablem2Pin3, speed2);
-    break;
-
-  /*  Stop */
-  case 'S':
-    digitalWrite(IN1, LOW);
-    digitalWrite(IN2, LOW);
-
-    digitalWrite(IN3, LOW);
-    digitalWrite(IN4, LOW);
-    
-    analogWrite(enablem1Pin3, 0);
-    analogWrite(enablem2Pin3, 0);
-  }
-}
 
 /********************************************************************************************/
 /****                                      Encoder                                      *****/
@@ -315,7 +162,7 @@ void IMU_Setup(){
 void IMU() {
   mpu.update();
 
-  if(millis() - timer > 150){ // print data every second
+  if(millis() - timer > 100){ 
 
     Serial.print(F("ANGLE Z: "));
     Serial.println(mpu.getAngleZ());
@@ -332,9 +179,9 @@ void IMU() {
 
 void ultrasonic()
 {
-  // Start with Fist Sensor (Behind the car)
+  // /* forward */
   // __________________________________
-  if (millis() - lastTriggerTimeN2 > 100)
+  if (millis() - lastTriggerTimeN2 > 70)
   {
     digitalWrite(trigN2, LOW);
     delayMicroseconds(5);
@@ -343,21 +190,15 @@ void ultrasonic()
     digitalWrite(trigN2, LOW);
 
     /* Measure the time taken for the ultrasonic pulse to return */
-    timF = pulseIn(echoN2, HIGH , 30000);
+    timF = pulseIn(echoN2, HIGH );
 
     distForw = timF * 0.034 / 2;
 
-    if (distForw < 12)
+    if (distForw < 9 && distForw !=0)
     {
-      //digitalWrite(Buzzer, HIGH);
-      tone(Buzzer, 1000);
-    
-      if (distForw < 10 && distForw != 0)
-      {
-        analogWrite(enablem1Pin3, 0);
-        analogWrite(enablem2Pin3, 0);
-        delay(2000);
-      }
+      digitalWrite(Buzzer, HIGH);
+      delay(70);
+
     }
     else
     {
@@ -366,61 +207,102 @@ void ultrasonic()
 
     lastTriggerTimeN2 = millis();
   }
- // delay(70);
 
+ /* behind 1*/
+// __________________________________ 
+if (millis() - lastTriggerTimeN3 > 70)
+{
+  digitalWrite(trigN1, LOW);
+  delayMicroseconds(5);
+  digitalWrite(trigN1, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trigN1, LOW);
 
-    digitalWrite(trigN1, LOW);
-    delayMicroseconds(5);
-    digitalWrite(trigN1, HIGH);
-    delayMicroseconds(10);
-    digitalWrite(trigN1, LOW);
+  tim2 = pulseIn(echoN1, HIGH);
+  /*  Calculate distance in centimeters */
+  distBehind1 = tim2 * 0.034 / 2;
+  // __________________________________
 
-    tim2 = pulseIn(echoN1, HIGH , 30000);
-    /*  Calculate distance in centimeters */
-    distBehind = tim2 * 0.034 / 2;
-    // __________________________________
-
-    // Logic
-    if (distBehind < 4 & distBehind !=0)
-    {
-      tone(Buzzer, 1000); // Beep at 1000 Hz
-    }
-    else
-    {
-      noTone(Buzzer);
-    }
-
+  // Logic
+  if (distBehind1 < 4 && distBehind1 !=0)
+  {
+    digitalWrite(Buzzer, HIGH); // Beep at 1000 Hz
     delay(70);
+  }
+  else
+  {
+    digitalWrite(Buzzer, LOW);
+  }
+
+    lastTriggerTimeN3 = millis();
+}
+
+ /* behind 2*/
+// __________________________________
+if (millis() - lastTriggerTimeN1 > 70)
+{
+  digitalWrite(trigN4, LOW);
+  delayMicroseconds(5);
+  digitalWrite(trigN4, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trigN4, LOW);
+
+  tim1 = pulseIn(echoN4, HIGH);
+  /*  Calculate distance in centimeters */
+  distBehind2 = tim1 * 0.034 / 2;
+  // __________________________________
+
+  // Logic
+  if (distBehind2 < 4 && distBehind2 !=0)
+  {
+    
+    digitalWrite(Buzzer, HIGH);
+    delay(70);
+  }
+  else
+  {
+    digitalWrite(Buzzer, LOW);
+  }
+  lastTriggerTimeN1 = millis();
+}
+  //delay(70);
 
 
+  /* backward */
+  // __________________________________
+if (millis() - lastTriggerTimeN4 > 70)
+{
+  digitalWrite(trigN3, LOW);
+  delayMicroseconds(5);
+  digitalWrite(trigN3, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trigN3, LOW);
 
-    digitalWrite(trigN3, LOW);
-    delayMicroseconds(5);
-    digitalWrite(trigN3, HIGH);
-    delayMicroseconds(10);
-    digitalWrite(trigN3, LOW);
+  timB = pulseIn(echoN3, HIGH);
+  /*  Calculate distance in centimeters */
+  distBack = timB * 0.034 / 2;
+  // __________________________________
 
-    timB = pulseIn(echoN3, HIGH , 30000);
-    /*  Calculate distance in centimeters */
-    distBack = timB * 0.034 / 2;
-    // __________________________________
+  // Logic
+  if (distBack < 4 && distBack !=0)
+  {
+    digitalWrite(Buzzer, HIGH); // Beep at 1000 Hz
+    //delay(1000);
+  }
+  else
+  {
+    digitalWrite(Buzzer, LOW);
+  }
+  lastTriggerTimeN4 = millis();
+}
 
-    // Logic
-    if (distBack < 4 && distBack !=0)
-    {
-      tone(Buzzer, 1000); // Beep at 1000 Hz
-    }
-    else
-    {
-      noTone(Buzzer);
-    }
-
-  delay(70);
   
   Serial.print("distForw: ");
   Serial.println(distForw);
-  Serial.print("distBehind: ");
-  Serial.println(distBehind);
+  Serial.print("distBehind1: ");
+  Serial.println(distBehind1);
+  Serial.print("distBehind2: ");
+  Serial.println(distBehind2);
   Serial.print("distBack: ");
   Serial.println(distBack);
 }
