@@ -5,6 +5,7 @@ from std_msgs.msg import Float32, Int32
 import serial
 import signal
 import sys
+import select  # Import the select module for checking input
 
 ser = None
 
@@ -22,16 +23,14 @@ def read_serial(port='/dev/ttyUSB0', baudrate=9600):
     try:
         # Open the serial port
         ser = serial.Serial(port, baudrate, timeout=1)
-        
+
         # Initialize a ROS node
         rospy.init_node('serial_node', anonymous=True)
-        
+
         # Create publishers for different topics
         pub_distance_forward = rospy.Publisher('distance_forward', Int32, queue_size=10)
-        
         pub_distance_behind1 = rospy.Publisher('distance_behind1', Int32, queue_size=10)
         pub_distance_behind2 = rospy.Publisher('distance_behind2', Int32, queue_size=10)
-    
         pub_distance_back = rospy.Publisher('distance_back', Int32, queue_size=10)
         pub_angle_z = rospy.Publisher('angle_z', Float32, queue_size=10)
         pub_distance_D = rospy.Publisher('distance_D', Float32, queue_size=10)
@@ -44,6 +43,22 @@ def read_serial(port='/dev/ttyUSB0', baudrate=9600):
 
         # Main loop to continuously read and process data from the serial port
         while not rospy.is_shutdown():
+            # Check if there's input available on the terminal
+            if sys.stdin in select.select([sys.stdin], [], [], 0)[0]:
+                # Read a line from the terminal
+                input_line = sys.stdin.readline().strip()
+
+                # Check if the input line is in the correct format (e.g., "150 150")
+                if len(input_line.split()) == 2:
+                    # Parse the input values
+                    speed1, speed2 = map(int, input_line.split())
+
+                    # Send the speeds to the ESP32 via serial
+                    ser.write(f"{speed1} {speed2}\n".encode())
+
+                    # Log the sent speeds
+                    rospy.loginfo(f"Sent speeds to ESP32: Speed1={speed1}, Speed2={speed2}")
+
             # Read a line from the serial port and decode it
             line = ser.readline().decode('utf-8').strip()
 
@@ -87,4 +102,3 @@ if __name__ == "__main__":
         read_serial()
     except rospy.ROSInterruptException:
         pass
-
