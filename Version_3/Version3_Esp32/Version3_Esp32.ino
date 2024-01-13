@@ -5,8 +5,8 @@
 *
 * @brief: Code for Version-Three of our project:
 *         AutoPilot-ParkAssist 
-*         using HC-05 Bluetooth Module and L298d MotorDriver
-*         and Encoder and couple of ultrasonics
+*         using Raspberry Pi 3B, Esp32, MPU6050, L298d Driver
+*         and Encoder and a Couple of ultrasonics
 *
 * @version: 3.0
 *
