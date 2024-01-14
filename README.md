@@ -3,7 +3,7 @@
 AutoPilot ParkAssist is an advanced self-parking system designed to make parking in tight spaces effortless. This project utilizes a combination of Raspberry Pi 3B, ESP32, camera, ultrasonic sensors, and a compass to provide real-time feedback during parking maneuvers. The entire system is open-source, fostering innovation and collaboration in the development of autonomous parking solutions.
 
 # Versions
-- [Version 0](Version_0/) - [ManualPhaseParkAssistV0](Version_0/ManualPhaseParkAssistV0.ino/):
+- [Version 0](Version_0/) :
    Manual Phase Park Assist utilizing Arduino Nano for testing, Bluetooth module HC-05, and L298n for motor control.
 
 - [Version 1](Version_1/): Sensors Calibration and Test
