@@ -99,7 +99,8 @@ void setup()
   IMU_Setup();
 
   /* Initialize ROS publishers */
-  nh.initNode();
+  nh.initNode("ESP32");
+  //nh.initNode();
   nh.advertise(pub_distance_forward);
   nh.advertise(pub_distance_behind1);
   nh.advertise(pub_distance_behind2);
