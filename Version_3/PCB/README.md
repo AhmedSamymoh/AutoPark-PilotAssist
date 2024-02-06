@@ -1,7 +1,7 @@
 # PCB Design
 
 ## 3D Model
-![o1](visuals/Layout.png)
+![o1](visuals/3D.png)
 
 ## Layout
 ![o1](visuals/Layout.png)
