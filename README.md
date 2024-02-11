@@ -21,8 +21,4 @@ AutoPilot ParkAssist is an advanced self-parking system designed to make parking
 
 We welcome contributions to enhance and improve the Project. If you have ideas, bug fixes, or new features to propose, Please feel free to open issues or pull requests to help improve.
 
-## License
-
-AutoPilot ParkAssist is released under the [MIT License](LICENSE)
-
----
+--
