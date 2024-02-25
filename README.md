@@ -18,20 +18,20 @@ An innovative and open-source self-parking system that incorporates Advanced Dri
 ## [Hardware System & PCB](PCB/)
 ![3D](PCB/visuals/3D.png)
 
-## Past Versions
-- [Version 0](Version_0/): Manual Phase Park Assist
-   Initial testing phase utilizing Arduino Nano, Bluetooth module HC-05, and L298n for motor control.
 
-- [Version 1](Version_1/): Sensors Calibration and Test
-   Focuses on calibrating and testing sensors to ensure accurate data collection during parking maneuvers.
+## Previous Versions
+I incorporated unit testing and adopted Agile software development practices throughout the project.
 
-- [Version 2](Version_2/):
-   - [Catkin_ws](Version_2/Raspberry/): ROS Workspace and Data Transmission
-      Introduces a ROS (Robot Operating System) workspace for the Raspberry Pi, enabling communication between devices and efficient data transmission.
-   - [ESP32](Version_2/Version2_Esp32/): ESP32 Receives data from sensors and sends it via USB to Raspberry Pi.
-      The ESP32 module in Version 2 is responsible for receiving sensor data and transmitting it to the Raspberry Pi through USB.
+- Version 0: Manual Phase Park Assist
+Initial testing utilizing Arduino Nano, Bluetooth module HC-05, and L298n.
+- Version 1: Sensor Calibration
+Focuses on calibrating and testing sensors for accurate data collection.
+- Version 2: ROS Workspace
+Catkin_ws: ROS workspace for communication.
+ESP32: ESP32 receives and transmits sensor data.
+
 
 
 ## Contributing
 We welcome contributions to enhance and improve the Project.
---
+
