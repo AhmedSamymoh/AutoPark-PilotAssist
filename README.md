@@ -10,7 +10,8 @@ An innovative and open-source self-parking system that incorporates Advanced Dri
    1. **Auto Park:**
       - The camera detects empty parking spaces using a Computer Vision (CV) script.
       - The parking node initializes, and the robot autonomously parks in the identified space.
-      - ESP32 sends real-time sensor readings to the Raspberry Pi via rosserial.
+      - FreeRTOS tasks manage ultrasonic sensor readings and IMU updates for precise navigation and
+        sends real-time sensor readings to the Raspberry Pi.
 
    2. **Pilot Assist:**
       - Utilizing a phone camera through TCP/IP with a laptop, the YOLOv8 Nano model is deployed.
