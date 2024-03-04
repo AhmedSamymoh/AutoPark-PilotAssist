@@ -1,7 +1,9 @@
 # AutoPark-PilotAssist
 
-An innovative and open-source self-parking system that incorporates Advanced Driver Assistance System (ADAS) features, including Autonomous Parking, Pilot Assistant, and Collision Avoidance. It combines hardware components such as Raspberry Pi 3B, ESP32, cameras, ultrasonic sensors, and a compass to create a comprehensive autonomous parking solution.
+An innovative and open-source self-parking system that incorporates Advanced Driver Assistance System (ADAS) features, including Autonomous Parking, Pilot Assistant, and Collision Avoidance. It combines hardware components such as Raspberry Pi 3B, compass , cameras, ultrasonic sensors, and ESP32 with FreeRTOS for efficient multitasking to create a comprehensive autonomous parking solution.
+
 ![p](PerviousVersions/Version_2/P.jpg)
+
 ## Project Final Version:
    The project's final version consists of two main components:
 
