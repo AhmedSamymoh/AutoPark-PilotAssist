@@ -18,6 +18,8 @@ An innovative and open-source self-parking system that incorporates Advanced Dri
       - A Python script initializes the node to send the vehicle's position using PID controller and ultrasonic readings.
       - The system follows the target vehicle, providing a pilot assist feature for smooth navigation.
 
+---
+
 ## [Hardware System & PCB](PCB/)
 ![3D](PCB/visuals/3D.png)
 
