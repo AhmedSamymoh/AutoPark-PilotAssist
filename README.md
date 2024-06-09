@@ -1,22 +1,23 @@
+####  *Faculy of Engineering, Alexandria University* Computer Systems and Control Project.
+_____
 # AutoPark-PilotAssist
-
 An innovative and open-source self-parking system that incorporates ``Advanced Driver Assistance System (ADAS)`` features, including **Autonomous Parking, Pilot Assistant, and Collision Avoidance**. It combines hardware components such as Raspberry Pi 3B, compass , cameras, ultrasonic sensors, and ESP32 with FreeRTOS for efficient multitasking to create a comprehensive autonomous parking solution.
 
 ![p](PerviousVersions/Version_2/P.jpg)
 
-# Project Final Version:
-   The project's final version consists of two main components:
+*The project's final version consists of two main components:*
 
-   1. **Auto Park:**
-      - The camera detects empty parking spaces using a Computer Vision (CV) script.
-      - The parking node initializes, and the robot autonomously parks in the identified space.
-      - FreeRTOS tasks manage ultrasonic sensor readings and IMU updates for precise navigation and
-        sends real-time sensor readings to the Raspberry Pi.
 
-   2. **Pilot Assist:**
-      - Utilizing a phone camera through TCP/IP with a laptop, the YOLOv8 Nano model is deployed.
-      - A Python script initializes the node to send the vehicle's position using PID controller and ultrasonic readings.
-      - The system follows the target vehicle, providing a pilot assist feature for smooth navigation.
+# Auto Park:
+   - The camera detects empty parking spaces using an OpenCV script.
+   - The parking node initializes, and the robot autonomously parks in the identified space.
+   - FreeRTOS tasks manage ultrasonic sensor readings and IMU updates for precise navigation and
+     sends real-time sensor readings to the Raspberry Pi.
+
+# **Pilot Assist:**
+   - Utilizing a phone camera through TCP/IP with a laptop, the YOLOv8 Nano model is deployed.
+   - A Python script initializes the node to send the vehicle's position using PID controller and ultrasonic readings.
+   - The system follows the target vehicle, providing a pilot assist feature for smooth navigation.
 
 ---
 
@@ -42,8 +43,4 @@ I incorporated unit testing and adopted Agile software development practices thr
    - developed *freeRTOS* to manage all sensors in real-time data for ESP32, ensuring efficient multitasking and timely data processing.
 
 
-
-
-## Contributing
-We welcome contributions to enhance and improve the Project.
 
