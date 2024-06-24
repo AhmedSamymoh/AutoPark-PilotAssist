@@ -1,8 +1,0 @@
-prefix=/home/mypi/catkin_ws/devel
-
-Name: your_motor_package
-Description: Description of your_motor_package
-Version: 0.0.0
-Cflags: 
-Libs: -L${prefix}/lib 
-Requires: 

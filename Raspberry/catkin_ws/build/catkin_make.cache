@@ -1,2 +1,0 @@
-smsm_test:your_motor_package
--DCATKIN_DEVEL_PREFIX=/home/mypi/catkin_ws/devel -DCMAKE_INSTALL_PREFIX=/home/mypi/catkin_ws/install -G Unix Makefiles
