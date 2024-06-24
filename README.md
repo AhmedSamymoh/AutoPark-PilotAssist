@@ -20,7 +20,7 @@ An innovative and open-source self-parking system that incorporates ``Advanced D
    - The system follows the target vehicle, providing a pilot assist feature for smooth navigation.
 
 ---
-- **Script:** 
+- **Scripts:** 
   - [AutoParking.py](Raspberry/catkin_ws/src/your_motor_package/scripts/AutoParkingFinal.py)
   - [PilotAssist.py](Raspberry/catkin_ws/src/your_motor_package/scripts/auto_pilot.py)
   - [VehicleDetection.py](Raspberry/catkin_ws/src/your_motor_package/scripts/VehicleDetection.py)
