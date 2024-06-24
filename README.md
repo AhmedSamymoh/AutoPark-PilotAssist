@@ -21,9 +21,9 @@ An innovative and open-source self-parking system that incorporates ``Advanced D
 
 ---
 - **Script:** 
-  - [AutoParking.py](PerviousVersions/Version_2/Raspberry/catkin_ws/src/your_motor_package/scripts/AutoParkngFinal.py)
-  - [PilotAssist.py](PerviousVersions/Version_2/Raspberry/catkin_ws/src/your_motor_package/scripts/auto_pilot.py)
-  - [VehicleDetection.py](PerviousVersions/Version_2/Raspberry/catkin_ws/src/your_motor_package/scripts/VehicleDetection.py)
+  - [AutoParking.py](Raspberry/catkin_ws/src/your_motor_package/scripts/AutoParkingFinal.py)
+  - [PilotAssist.py](Raspberry/catkin_ws/src/your_motor_package/scripts/auto_pilot.py)
+  - [VehicleDetection.py](Raspberry/catkin_ws/src/your_motor_package/scripts/VehicleDetection.py)
   - [ParkingDetection.py](PerviousVersions/Version_1/ParkingDetection.py)
   - [ESP32_freeRTOS.ino](ESP32_freeRTOS/ESP32_freeRTOS.ino)
   - [MPU_UnitTest.ino](PerviousVersions/Version_1/MPU_test/MPU_test.ino)
